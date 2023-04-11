@@ -11,12 +11,16 @@
 		<param name="resolution" value="0.05" />
 
 		<!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
-		<param name="frame_id" value="world" />
+		<param name="frame_id" value="odom" />
+
+		<param name="base_frame_id" value="base_link" />
+
 
 		<!-- maximum range to integrate (speedup!) -->
 		<param name="sensor_model.max_range" value="5.0" />
+		<param name="point_cloud_min_z" value="0.10" />
 
 		<!-- data source to integrate (PointCloud2) -->
-		<remap from="cloud_in" to="/point_cloud" />
+		<remap from="cloud_in" to="point_cloud" />
 	</node>
 </launch>
