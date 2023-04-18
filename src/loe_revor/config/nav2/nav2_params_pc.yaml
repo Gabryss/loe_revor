@@ -1,6 +1,6 @@
 amcl:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
     alpha1: 0.2
     alpha2: 0.2
     alpha3: 0.2
@@ -41,15 +41,15 @@ amcl:
 
 amcl_map_client:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
 
 amcl_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
 
 bt_navigator:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
     global_frame: odom
     robot_base_frame: base_link
     odom_topic: /odom
@@ -83,11 +83,11 @@ bt_navigator:
 
 bt_navigator_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
 
 controller_server:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
     controller_frequency: 20.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -140,11 +140,11 @@ controller_server:
       stateful: True
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
       BaseObstacle.scale: 0.02
-      PathAlign.scale: 32.0
+      PathAlign.scale: 50.0
       PathAlign.forward_point_distance: 0.1
       GoalAlign.scale: 24.0
       GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0
+      PathDist.scale: 50.0
       GoalDist.scale: 24.0
       RotateToGoal.scale: 32.0
       RotateToGoal.slowing_factor: 5.0
@@ -152,7 +152,7 @@ controller_server:
 
 controller_server_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
 
 local_costmap:
   local_costmap:
@@ -161,7 +161,7 @@ local_costmap:
       publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_link
-      use_sim_time: True
+      use_sim_time: true
       rolling_window: true
       width: 3
       height: 3
@@ -181,22 +181,22 @@ local_costmap:
         z_voxels: 16
         max_obstacle_height: 2.0
         mark_threshold: 0
-        observation_sources: scan
-        scan:
-          topic: /scan
+        observation_sources: pointcloud
+        pointcloud:
+          topic: /point_cloud
           max_obstacle_height: 2.0
           clearing: True
           marking: True
-          data_type: "LaserScan"
+          data_type: "PointCloud2"
       static_layer:
         map_subscribe_transient_local: True
       always_send_full_costmap: True
   local_costmap_client:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: true
   local_costmap_rclcpp_node:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: true
 
 global_costmap:
   global_costmap:
@@ -205,7 +205,7 @@ global_costmap:
       publish_frequency: 1.0
       global_frame: odom
       robot_base_frame: base_link
-      use_sim_time: True
+      use_sim_time: true
       robot_radius: 0.22
       resolution: 0.05
       track_unknown_space: true
@@ -213,36 +213,41 @@ global_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        observation_sources: scan
-        scan:
-          topic: /scan
+        observation_sources: pointcloud
+        pointcloud:
+          topic: /point_cloud
           max_obstacle_height: 2.0
           clearing: True
           marking: True
-          data_type: "LaserScan"
+          data_type: "PointCloud2"
+
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
+        map_topic: "/projected_map"
+
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
         inflation_radius: 0.55
+
       always_send_full_costmap: True
+  
   global_costmap_client:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: true
   global_costmap_rclcpp_node:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: true
 
 map_server:
   ros__parameters:
-    use_sim_time: True
-    yaml_filename: "turtlebot3_world.yaml"
+    use_sim_time: true
+    yaml_filename: ""
 
 map_saver:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
     save_map_timeout: 5000
     free_thresh_default: 0.25
     occupied_thresh_default: 0.65
@@ -251,7 +256,7 @@ map_saver:
 planner_server:
   ros__parameters:
     expected_planner_frequency: 20.0
-    use_sim_time: True
+    use_sim_time: true
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
@@ -261,8 +266,7 @@ planner_server:
 
 planner_server_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
-
+    use_sim_time: true
 recoveries_server:
   ros__parameters:
     costmap_topic: local_costmap/costmap_raw
@@ -286,4 +290,4 @@ recoveries_server:
 
 robot_state_publisher:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: true
