@@ -139,6 +139,7 @@ controller_server:
       short_circuit_trajectory_evaluation: True
       stateful: True
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
+      # critics: ["RotateToGoal", "Oscillation" ,"GoalAlign", "PathAlign", "PathDist", "GoalDist"]
       BaseObstacle.scale: 0.02
       PathAlign.scale: 32.0
       PathAlign.forward_point_distance: 0.1
@@ -268,7 +269,8 @@ recoveries_server:
     costmap_topic: local_costmap/costmap_raw
     footprint_topic: local_costmap/published_footprint
     cycle_frequency: 10.0
-    recovery_plugins: ["spin", "back_up", "wait"]
+    # recovery_plugins: ["spin", "back_up", "wait"]
+    recovery_plugins: []
     spin:
       plugin: "nav2_recoveries/Spin"
     back_up:
