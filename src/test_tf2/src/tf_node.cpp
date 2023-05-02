@@ -23,8 +23,8 @@ class ROS2_TF_Node : public rclcpp::Node
       publisher_ = this->create_publisher<geometry_msgs::msg::TransformStamped>("tf", 10);
 
 
-      // subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-      // "topic", 1, std::bind(&ROS2_TF_Node::topic_callback, this, std::placeholders::_1));
+      subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+      "topic", 1, std::bind(&ROS2_TF_Node::topic_callback, this, std::placeholders::_1));
 
     }
 
@@ -39,14 +39,14 @@ class ROS2_TF_Node : public rclcpp::Node
 
 
     // Callback of every messages on tf topic
-    void topic_callback(const geometry_msgs::msg::TransformStamped & msg) const
+    void topic_callback(const geometry_msgs::msg::TransformStamped ::SharedPtr msg) const
     {
       // Fetch the message
-      RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.header.frame_id.c_str());
+      RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->header.frame_id.c_str());
       
       // Publish the message on a different topic
       auto message = geometry_msgs::msg::TransformStamped();
-      message.header = msg.header;
+      message.header = msg->header;
       RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.header.frame_id.c_str());
       publisher_->publish(message);
     }
